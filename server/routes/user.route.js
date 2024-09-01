@@ -10,7 +10,7 @@ userRouter.get("/",(req,res)=>{
 })
 
 userRouter.post("/register", async(req,res)=>{
-    const {name,email,password} = req.body
+    const {name,email,password,role} = req.body
 
     try {
         const existingUser = await UserModel.findOne({email})
@@ -24,7 +24,8 @@ userRouter.post("/register", async(req,res)=>{
             const addUser = new UserModel({
                 name,
                 email,
-                password:hash
+                password:hash,
+                role
             })
             await addUser.save()
             res.status(201).json({message:"User Registered Successfully"})
